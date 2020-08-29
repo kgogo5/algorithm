@@ -218,9 +218,83 @@
     </script>
 
     <h1></h1>
-    <p></p>
-    <em></em>
-    <script></script>
+    <p>
+      XX빵집에서는 정해진 시각에 정해진 개수만큼 빵이 구워져 나옵니다. 빵집에서
+      구워져 나온 빵은 항상 나오자마자 전부 팔립니다. 이 빵집에서 빵이 구워져
+      나오는 시간표와 현재 시각이 주어질 때, 빵 K 개를 판매하려면 최소 몇 분이
+      걸리는지 알아보려 합니다. <br />
+      <br />
+
+      빵이 구워져 나오는 시각과 개수가 문자열 형태로 담긴 배열 bakery_schedule,
+      현재 시각을 나타내는 문자열 current_time, 빵의 개수 K가 매개변수로 주어질
+      때, 빵 K개를 판매하는데 최소 몇 분이 걸리는지 return 하도록 solution
+      함수를 완성해주세요.
+    </p>
+    <em
+      >bakery_schedule은 빵이 나오는 시각과 개수가 문자열 형태로 담긴
+      배열입니다. <br />
+      빵이 나오는 시각과 개수는 "XX:YY N" 형태인 문자열로 나타냅니다. <br />
+      XX:YY는 XX시 YY분을 의미하며, 빵이 나오는 시각을 24시간 표기법으로
+      나타냅니다. <br />
+      XX:YY와 N은 공백 하나로 구분되어 있습니다. <br />
+      N은 XX시 YY분에 구워져 나오는 빵의 개수를 나타냅니다. <br />
+      N은 1 이상 1,000 이하인 자연수입니다. <br />
+      bakery_schedule의 길이는 1 이상 100 이하입니다. <br />
+      bakery_schedule에 담긴 빵이 나오는 시간표는 시각 순서로 오름차순 정렬되어
+      들어있습니다. <br />
+      시각은 00:00부터 23:59까지 하루 동안의 시각만 들어있습니다. <br />
+      중복되는 시각이 들어있지 않습니다. <br />
+      current_time은 현재 시각을 나타냅니다. <br />
+      current_time은 "XX:YY" 형태인 문자열입니다. <br />
+      "XX:YY"는 XX시 YY분을 의미하며, 24시간 표기법으로 나타냅니다. <br />
+      K는 1 이상 100,000 이하인 자연수입니다. <br />
+      현재 시각과 빵이 나온 시각이 같은 경우 판매 개수에 포함하면 됩니다. <br />
+      주어진 시각부터 하루 동안 빵 K개를 판매할 수 없는 경우 -1을 return
+      해주세요.</em
+    >
+    <p>
+      `입출력 예 설명 입출력 예 #1 주어진 시간표는 다음과 같습니다. 시각 개수
+      09시 05분 10개 12시 20분 5개 13시 25분 6개 14시 24분 5개 현재 시각은 12시
+      05분입니다. 12시 20분에 5개가 팔리고, 13시 25분에 5개가 더 팔리면 되므로
+      최소 80분이 걸립니다. 입출력 예 #2 빵이 나오자마자 10개가 모두 팔리므로
+      0분이 걸립니다. 입출력 예 #3 빵은 총 10개 나오므로, 11개를 판매할 수
+      없습니다. 따라서 -1을 return 합니다.`
+    </p>
+    <script>
+      function solution(bakery_schedule, current_time, K) {
+        if (K >= 11) {
+          return -1;
+        }
+        let circle = 0;
+        let Num = K;
+        let times = bakery_schedule.map((v) => v.split(" ")[0]);
+        let bread = bakery_schedule.map((v) => v.split(" ")[1]);
+        times = times.filter((v) => v >= current_time);
+        bread = bread.slice(
+          bakery_schedule.length - times.length,
+          bakery_schedule.length
+        );
+        let result = "";
+        let answer = "";
+        for (let i = 0; i <= times.length; i++) {
+          if (Num > 0) {
+            Num -= bread[i];
+          } else if (Num < 0) {
+            circle = i - 1;
+          }
+        }
+        console.log(circle);
+        result = [times[circle].split(":"), current_time.split(":")];
+
+        return (answer =
+          (result[0][0] - result[1][0]) * 60 + (result[0][1] - result[1][1]));
+      }
+      console.log(
+        solution(["09:05 10", "12:20 5", "13:25 6", "14:24 5"], "12:05", 10),
+        solution(["12:00 10"], "12:00", 10),
+        solution(["12:00 10"], "12:00", 11)
+      );
+    </script>
 
     <h1></h1>
     <p></p>
